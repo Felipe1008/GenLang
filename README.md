@@ -15,8 +15,8 @@ Essa funcionalidade surgiu a partir da minha própria experiência com o Anki: a
 Dentro de cada baralho, o usuário tem três opções principais:
 
 - **Adicionar**: Ao clicar neste botão, uma nova tela será aberta com um campo de entrada onde o usuário pode digitar uma palavra ou frase. Essa entrada será armazenada como um novo card.
-- **Cards**: Exibe todos os cards criados no baralho. O usuário pode editar ou excluir cards existentes.
-- **Revisar**: Permite que o usuário revise os cards. O processo de revisão funciona da seguinte forma:
+- **Painel**: Exibe todos os cards criados no baralho. O usuário pode editar ou excluir cards existentes.
+- **Estudar**: Permite que o usuário revise os cards. O processo de revisão funciona da seguinte forma:
   - O usuário verá uma frase gerada por IA contendo a palavra ou frase adicionada ao card.
   - O usuário pode clicar no botão **"Mostrar Resposta"** para ver a tradução ou explicação da frase.
   - Após ver a resposta, o usuário pode clicar em **"Acerto"** ou **"Erro"** para determinar quando o card será revisado novamente:
@@ -31,7 +31,6 @@ Atualmente, estou desenvolvendo o **protótipo inicial** deste sistema, com a im
 Este protótipo está em fase inicial, e as funcionalidades serão aprimoradas conforme o desenvolvimento avançar. Fique à vontade para contribuir ou sugerir melhorias!
 
 ## Dependências
-- **CustomTkinter**: Para a interface gráfica.
 - Outros pacotes necessários serão adicionados conforme o desenvolvimento do projeto.
 
 Se tiver dúvidas ou sugestões, sinta-se à vontade para abrir uma **issue** ou enviar um **pull request**!
