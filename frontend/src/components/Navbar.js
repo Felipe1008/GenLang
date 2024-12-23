@@ -1,13 +1,26 @@
 import React from "react";
+import NavbarButton from "./NavbarButton";
 
 const Navbar = () => {
   return (
-    <nav style={{display:"grid", backgroundColor: "#2e2e2e", padding:"2px 2px"}}>
-      <h1 style={{display: "flex", justifyContent:"center", color:"white", fontFamily:"cursive"}}>GenLang</h1>
-      <div style={{display: "flex", justifyContent: "center", color:"white"}}>
-        <button style={{ margin: "20px 20px 10px 0px", backgroundColor:"transparent", color:"white" }}>Baralho</button>
-        <button style={{ margin: "20px 20px 10px 0px", backgroundColor:"transparent", color:"white" }}>Adicionar</button>
-        <button style={{ margin: "20px 20px 10px 0px", backgroundColor:"transparent", color:"white" }}>Painel</button>
+    <nav style={{ backgroundColor: "#3e3e3e", padding: "0" }}>
+      {/* Faixa escura para o título */}
+      <div
+        style={{
+          backgroundColor: "#2e2e2e",
+          padding: "10px 0",
+          textAlign: "center",
+          borderBottom: "2px solid #1e1e1e", // Traço de separação
+        }}
+      >
+        <h1 style={{ color: "white", fontFamily: "cursive", margin: 0 }}>GenLang</h1>
+      </div>
+
+      {/* Faixa com os botões */}
+      <div style={{ display: "flex", justifyContent: "center", gap: "15px", padding: "10px 0" }}>
+        {["Baralhos", "Painel", "Adicionar", "Criar Baralho"].map((text, index) => (
+          <NavbarButton key={index} text={text} />
+        ))}
       </div>
     </nav>
   );
