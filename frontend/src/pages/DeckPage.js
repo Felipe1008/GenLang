@@ -1,18 +1,31 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
 
-const DeckPage = () => {
-  const { deckName } = useParams(); // Pega o nome do baralho da URL
+const DeckPage = ({ decks }) => {
+  const { deckName } = useParams();
+  const deck = decks.find((d) => d.name === deckName);
 
   return (
-    <div>
-      <Navbar title={deckName} showCreateButton={false} />
-      <div style={{ padding: "20px", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "cursive" }}>{deckName}</h2>
-        <p>Bem-vindo ao baralho "{deckName}"!</p>
-        {/* Adicione mais funcionalidades aqui */}
-      </div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        height: "100vh", // Ajusta a altura para preencher a tela
+        textAlign: "center",
+      }}
+    >
+      {deck ? (
+        <div>
+          <h2 style={{ fontFamily: "cursive", fontSize: "1.5rem", marginBottom: "20px" }}>{deckName}</h2>
+          <p style={{ fontSize: "1.2rem", color: "#555" }}>
+            Este baralho possui {deck.cards.length} cards.
+          </p>
+        </div>
+      ) : (
+        <p style={{ fontSize: "1.5rem", color: "#888" }}>
+          Baralho não encontrado.
+        </p>
+      )}
     </div>
   );
 };
