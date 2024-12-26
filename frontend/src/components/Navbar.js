@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import PanelModal from "./PanelModal";
 import AddCardModal from "./AddCardModal";
 
-const Navbar = ({ deckName, decks, addDeck }) => {
+const Navbar = ({ deckName, decks, addDeck, setDecks }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [newDeckName, setNewDeckName] = useState("");
@@ -19,13 +19,20 @@ const Navbar = ({ deckName, decks, addDeck }) => {
     }
   };
 
-// Define the onAddCard function
-const onAddCard = (frontText, selectedDeck) => {
-  // Logic to handle the added card
-  console.log("Card added:", frontText, selectedDeck);
+  const addCardToDeck = (frontText, selectedDeckId) => {
+    setDecks((prevDecks) =>
+      prevDecks.map((deck) =>
+        deck.id === selectedDeckId
+          ? { ...deck, cards: [...deck.cards, { frontText }] }
+          : deck
+      )
+    );
+  };
 
-  // You can add the card to the deck or any other logic here
-};
+  const onAddCard = (frontText, selectedDeck) => {
+    addCardToDeck(frontText, selectedDeck);
+    console.log("Cartão adicionado ao baralho:", selectedDeck, frontText);
+  };
 
   return (
     <>
@@ -54,7 +61,6 @@ const onAddCard = (frontText, selectedDeck) => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <NavbarButton label="Baralhos" path="/" />
             <NavbarButton label="Painel" onClick={() => setIsPanelOpen(true)} />
-            {/* TODO: ADICIONAR FUNCIONALIDADE AO BOTÃO ADICIONAR*/}
             <NavbarButton
               label="Adicionar"
               onClick={() => setIsAddModalOpen(true)}
@@ -73,7 +79,7 @@ const onAddCard = (frontText, selectedDeck) => {
 
       {isCreateModalOpen && (
         <div style={styles.modal}>
-          <h3 style={{color: "white"}}>Nome do baralho:</h3>
+          <h3 style={{ color: "white" }}>Nome do baralho:</h3>
           <input
             type="text"
             value={newDeckName}
@@ -98,6 +104,7 @@ const onAddCard = (frontText, selectedDeck) => {
         <AddCardModal
           onClose={() => setIsAddModalOpen(false)}
           onAddCard={onAddCard}
+          decks={decks} // Passa os baralhos para o AddCardModal
         />
       )}
     </>

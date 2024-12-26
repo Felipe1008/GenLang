@@ -6,14 +6,15 @@ const PanelModal = ({ decks, onClose }) => {
   if (!decks || decks.length === 0) {
     return (
       <div style={styles.modal}>
-        <button 
-            style={styles.closeButton} onClick={onClose} 
-            onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
-            onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+        <button
+          style={styles.closeButton}
+          onClick={onClose}
+          onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
+          onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
         >
           Fechar
         </button>
-        <p style={{color:"white"}}>Nenhum baralho disponível.</p>
+        <p style={{ color: "white" }}>Nenhum baralho disponível.</p>
       </div>
     );
   }
@@ -24,13 +25,19 @@ const PanelModal = ({ decks, onClose }) => {
         Fechar
       </button>
       <div style={styles.content}>
+        {/* Lista de baralhos */}
         <div style={styles.decksList}>
+          <h3 style={{ color: "white" }}>Baralhos</h3>
           {decks.map((deck, index) => (
             <p
               key={index}
               style={{
                 cursor: "pointer",
                 fontWeight: deck === selectedDeck ? "bold" : "normal",
+                color: deck === selectedDeck ? "#1e90ff" : "white",
+                padding: "5px",
+                backgroundColor: deck === selectedDeck ? "#555" : "transparent",
+                borderRadius: "4px",
               }}
               onClick={() => setSelectedDeck(deck)}
             >
@@ -38,11 +45,36 @@ const PanelModal = ({ decks, onClose }) => {
             </p>
           ))}
         </div>
+
+        {/* Lista de cartões do baralho selecionado */}
         <div style={styles.cardsList}>
           {selectedDeck ? (
-            <p>Exibindo cartões para: {selectedDeck.name}</p>
+            <>
+              <h3 style={{ color: "white" }}>Cartões: {selectedDeck.name}</h3>
+              {selectedDeck.cards.length > 0 ? (
+                <ul style={{ listStyleType: "none", padding: 0 }}>
+                  {selectedDeck.cards.map((card, index) => (
+                    <li
+                      key={index}
+                      style={{
+                        backgroundColor: "#2e2e2e",
+                        color: "white",
+                        padding: "10px",
+                        marginBottom: "5px",
+                        borderRadius: "4px",
+                        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+                      }}
+                    >
+                      {card.frontText}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p style={{ color: "#ccc" }}>Nenhum cartão neste baralho.</p>
+              )}
+            </>
           ) : (
-            <p>Nenhum baralho selecionado.</p>
+            <p style={{ color: "#ccc" }}>Nenhum baralho selecionado.</p>
           )}
         </div>
       </div>
@@ -61,7 +93,7 @@ const styles = {
     borderRadius: "8px",
     boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
     zIndex: 1000,
-    width: "50%",
+    width: "60%",
     maxHeight: "80%",
     overflowY: "auto",
   },
@@ -82,10 +114,12 @@ const styles = {
     flex: 1,
     borderRight: "1px solid #ddd",
     padding: "10px",
+    color: "white",
   },
   cardsList: {
     flex: 2,
     padding: "10px",
+    color: "white",
   },
 };
 

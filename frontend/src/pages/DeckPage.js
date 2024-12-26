@@ -16,10 +16,26 @@ const DeckPage = ({ decks }) => {
     >
       {deck ? (
         <div>
-          <h2 style={{ fontFamily: "cursive", fontSize: "1.5rem", marginBottom: "20px" }}>{deckName}</h2>
+          <h2
+            style={{
+              fontFamily: "cursive",
+              fontSize: "1.5rem",
+              marginBottom: "20px",
+            }}
+          >
+            {deckName}
+          </h2>
           <p style={{ fontSize: "1.2rem", color: "#555" }}>
-            Este baralho possui {deck.cards.length} cards.
+            Este baralho possui {deck.cards.length}{" "}
+            {deck.cards.length === 1 ? "card" : "cards"}.
           </p>
+          <ul style={{ listStyleType: "none", padding: 0 }}>
+            {deck.cards.map((card, index) => (
+              <li key={index} style={{ marginBottom: "10px" }}>
+                {card.frontText}
+              </li>
+            ))}
+          </ul>
         </div>
       ) : (
         <p style={{ fontSize: "1.5rem", color: "#888" }}>
