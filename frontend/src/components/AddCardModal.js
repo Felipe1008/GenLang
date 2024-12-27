@@ -58,7 +58,6 @@ const AddCardModal = ({ onClose, onAddCard, decks = [] }) => {  // Default to em
         <h2 style={{ color: "white", marginTop: "15px", marginBottom: "5px", fontSize: "16px" }}>
           Selecionar Baralho
         </h2>
-        {/* ARRUMAR SELECT PARA APARECER OS BARALHOS CORRETAMENTE */}
         <select
           value={selectedDeck}
           onChange={(e) => setSelectedDeck(e.target.value)}

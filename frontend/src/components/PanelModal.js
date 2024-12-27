@@ -50,7 +50,7 @@ const PanelModal = ({ decks, onClose }) => {
         <div style={styles.cardsList}>
           {selectedDeck ? (
             <>
-              <h3 style={{ color: "white" }}>Cartões: {selectedDeck.name}</h3>
+              <h3 style={{ color: "white" }}>Cartões</h3>
               {selectedDeck.cards.length > 0 ? (
                 <ul style={{ listStyleType: "none", padding: 0 }}>
                   {selectedDeck.cards.map((card, index) => (

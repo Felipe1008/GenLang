@@ -13,7 +13,7 @@ const Navbar = ({ deckName, decks, addDeck, setDecks }) => {
 
   const handleCreateDeck = () => {
     if (newDeckName.trim()) {
-      addDeck(newDeckName); // Adiciona o novo baralho
+      addDeck(newDeckName); // Agora passa apenas o nome
       setNewDeckName(""); // Limpa o campo de entrada
       setIsCreateModalOpen(false); // Fecha o modal
     }
@@ -29,9 +29,14 @@ const Navbar = ({ deckName, decks, addDeck, setDecks }) => {
     );
   };
 
-  const onAddCard = (frontText, selectedDeck) => {
-    addCardToDeck(frontText, selectedDeck);
-    console.log("Cartão adicionado ao baralho:", selectedDeck, frontText);
+  const onAddCard = (frontText, selectedDeckId) => {
+    if (!selectedDeckId) {
+      console.error("Erro: Baralho selecionado inválido.", selectedDeckId);
+      return;
+    }
+
+    addCardToDeck(frontText, selectedDeckId);
+    console.log("Cartão adicionado ao baralho:", selectedDeckId, frontText);
   };
 
   return (
