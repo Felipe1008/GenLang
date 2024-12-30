@@ -3,6 +3,8 @@ import NavbarButton from "./NavbarButton";
 import { useLocation } from "react-router-dom";
 import PanelModal from "./PanelModal";
 import AddCardModal from "./AddCardModal";
+import { v4 as uuidv4 } from 'uuid';
+
 
 const Navbar = ({ deckName, decks, addDeck, setDecks }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -13,31 +15,64 @@ const Navbar = ({ deckName, decks, addDeck, setDecks }) => {
 
   const handleCreateDeck = () => {
     if (newDeckName.trim()) {
-      addDeck(newDeckName); // Agora passa apenas o nome
-      setNewDeckName(""); // Limpa o campo de entrada
-      setIsCreateModalOpen(false); // Fecha o modal
+      const newDeck = {
+        id: uuidv4(), // Gera um ID único
+        name: newDeckName,
+        cards: [],
+      };
+      addDeck(newDeck);
+      setNewDeckName("");
+      setIsCreateModalOpen(false);
     }
   };
 
   const addCardToDeck = (frontText, selectedDeckId) => {
+    const newCard = {
+      id: uuidv4(), // Gera um ID único para o cartão
+      frontText,
+    };
     setDecks((prevDecks) =>
       prevDecks.map((deck) =>
         deck.id === selectedDeckId
-          ? { ...deck, cards: [...deck.cards, { frontText }] }
+          ? { ...deck, cards: [...deck.cards, newCard] }
           : deck
       )
     );
   };
-
   const onAddCard = (frontText, selectedDeckId) => {
     if (!selectedDeckId) {
       console.error("Erro: Baralho selecionado inválido.", selectedDeckId);
       return;
     }
 
-    addCardToDeck(frontText, selectedDeckId);
-    console.log("Cartão adicionado ao baralho:", selectedDeckId, frontText);
-  };
+  addCardToDeck(frontText, selectedDeckId);
+  console.log("Cartão adicionado ao baralho:", selectedDeckId, frontText);
+};
+
+const updateCardInDeck = (deckId, cardId, updatedText) => {
+  setDecks((prevDecks) =>
+    prevDecks.map((deck) =>
+      deck.id === deckId
+        ? {
+            ...deck,
+            cards: deck.cards.map((card) =>
+              card.id === cardId ? { ...card, frontText: updatedText } : card
+            ),
+          }
+        : deck
+    )
+  );
+};
+
+const deleteCardFromDeck = (deckId, cardId) => {
+  setDecks((prevDecks) =>
+    prevDecks.map((deck) =>
+      deck.id === deckId
+        ? { ...deck, cards: deck.cards.filter((card) => card.id !== cardId) }
+        : deck
+    )
+  );
+};
 
   return (
     <>
@@ -80,7 +115,14 @@ const Navbar = ({ deckName, decks, addDeck, setDecks }) => {
         </div>
       </nav>
 
-      {isPanelOpen && <PanelModal decks={decks} onClose={() => setIsPanelOpen(false)} />}
+      {isPanelOpen && (
+        <PanelModal
+          decks={decks}
+          onClose={() => setIsPanelOpen(false)}
+          updateCard={updateCardInDeck}
+          deleteCard={deleteCardFromDeck}
+        />
+      )}
 
       {isCreateModalOpen && (
         <div style={styles.modal}>
